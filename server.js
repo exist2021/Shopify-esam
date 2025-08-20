@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 
 const app = express();
 const port = 3000;
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const resultsFilePath = path.join(__dirname, 'survey_results.csv');
+const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbz8xBpkM0GTIH6BIwZg8hQ13Fg_9-ZxTZuXs0mN58PJqK25tdRqpcgtZ7B4fzvpcJ9d/exec';
 
 app.post('/submit', (req, res) => {
   const data = req.body;
@@ -27,14 +29,11 @@ app.post('/submit', (req, res) => {
     if (value === null || value === undefined) {
       return '';
     }
-    // If value is an array (from checkboxes), join it with semicolons
     if (Array.isArray(value)) {
       value = value.join('; ');
     }
     const stringValue = String(value);
-    // If the value contains a comma, a double quote, or a newline, enclose it in double quotes.
     if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
-      // Escape double quotes by doubling them
       return `"${stringValue.replace(/"/g, '""')}"`;
     }
     return stringValue;
@@ -48,6 +47,17 @@ app.post('/submit', (req, res) => {
       console.error('Error writing to CSV file', err);
       return res.status(500).send('Error saving survey data.');
     }
+
+    // After saving to CSV, send the data to Google Apps Script
+    // We do this in a non-blocking way and don't let it affect the client response.
+    axios.post(googleScriptUrl, data)
+      .then(response => {
+        console.log('Successfully sent data to Google Sheet:', response.data);
+      })
+      .catch(error => {
+        console.error('Error sending data to Google Sheet:', error.message);
+      });
+
     res.status(200).send('Survey submitted successfully!');
   });
 });
