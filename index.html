@@ -34,7 +34,7 @@
 <h1>Aify-eSamudaay Merchant Survey</h1>
 <p>Please take a few minutes to complete this survey designed for merchants with turnover between ₹3 crore and ₹10 crore. Your feedback will help us understand the need for a delivery app that you can manage, with backend delivery support offered by Udupi eSamudaay.</p>
 
-<form id="merchantSurvey">
+<form id="merchantSurvey" method="POST" action="https://script.google.com/macros/s/AKfycbxxjZwC0YASsCnnASpkHXKpu8CdbYur5fuyw0mbBTZusIyIlXtPoXN0DREhUy5nL-cG/exec">
 
 <label for="businessName">1. Business Name</label>
 <input type="text" id="businessName" name="businessName" required />
@@ -165,54 +165,6 @@
 <button type="submit">Submit Survey</button>
 
 </form>
-
-<script>
-  const form = document.getElementById('merchantSurvey');
-  const submitButton = form.querySelector('button[type="submit"]');
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    submitButton.disabled = true;
-    submitButton.textContent = 'Submitting...';
-
-    const formData = new FormData(form);
-    const data = {};
-    for (const [key, value] of formData.entries()) {
-      if (data[key]) {
-        if (!Array.isArray(data[key])) {
-          data[key] = [data[key]];
-        }
-        data[key].push(value);
-      } else {
-        data[key] = value;
-      }
-    }
-
-    try {
-      const response = await fetch('http://localhost:3000/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        form.innerHTML = '<h2>Thank you for your submission!</h2><p>Your feedback has been recorded.</p>';
-      } else {
-        const errorText = await response.text();
-        alert(`An error occurred: ${errorText}`);
-        submitButton.disabled = false;
-        submitButton.textContent = 'Submit Survey';
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('An error occurred while submitting the form. Please try again later.');
-      submitButton.disabled = false;
-      submitButton.textContent = 'Submit Survey';
-    }
-  });
-</script>
 
 </body>
 </html>
