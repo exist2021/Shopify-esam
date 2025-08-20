@@ -27,6 +27,21 @@
     border-radius: 5px; cursor: pointer; font-size: 16px;
   }
   button:hover { background-color: #005bb5; }
+  .error-message {
+    display: none;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+  }
+  input.error, select.error, textarea.error {
+    border-color: red;
+  }
+  .error-label {
+    color: red;
+  }
 </style>
 </head>
 <body>
@@ -34,7 +49,9 @@
 <h1>Aify-eSamudaay Merchant Survey</h1>
 <p>Please take a few minutes to complete this survey designed for merchants with turnover between ₹3 crore and ₹10 crore. Your feedback will help us understand the need for a delivery app that you can manage, with backend delivery support offered by Udupi eSamudaay.</p>
 
-<form id="merchantSurvey" method="POST" action="https://script.google.com/macros/s/AKfycbxxjZwC0YASsCnnASpkHXKpu8CdbYur5fuyw0mbBTZusIyIlXtPoXN0DREhUy5nL-cG/exec">
+<form id="merchantSurvey" method="POST" action="https://script.google.com/macros/s/AKfycbxxjZwC0YASsCnnASpkHXKpu8CdbYur5fuyw0mbBTZusIyIlXtPoXN0DREhUy5nL-cG/exec" novalidate>
+
+<div id="error-message" class="error-message"></div>
 
 <label for="businessName">1. Business Name</label>
 <input type="text" id="businessName" name="businessName" required />
@@ -61,11 +78,13 @@
   <option value="other">Other</option>
 </select>
 
-<label>5. Do you currently offer home delivery for your products?</label>
-<div class="radio-group">
-  <label><input type="radio" name="deliveryOffered" value="yes" required /> Yes</label>
-  <label><input type="radio" name="deliveryOffered" value="no" /> No</label>
-</div>
+<fieldset>
+  <legend>5. Do you currently offer home delivery for your products?</legend>
+  <div class="radio-group">
+    <label><input type="radio" name="deliveryOffered" value="yes" required /> Yes</label>
+    <label><input type="radio" name="deliveryOffered" value="no" /> No</label>
+  </div>
+</fieldset>
 
 <label>6. If yes, how do you currently manage deliveries?</label>
 <textarea id="deliveryManagement" name="deliveryManagement" rows="3" placeholder="E.g., in-house staff, third-party service, self-delivery"></textarea>
@@ -80,8 +99,8 @@
   <label><input type="checkbox" name="deliveryChallenges" value="other" /> Other</label>
 </div>
 
-<label>8. How important is having a reliable delivery service for your business growth?</label>
-<select name="deliveryImportance" required>
+<label for="deliveryImportance">8. How important is having a reliable delivery service for your business growth?</label>
+<select id="deliveryImportance" name="deliveryImportance" required>
   <option value="" disabled selected>Select importance level</option>
   <option value="veryImportant">Very Important</option>
   <option value="important">Important</option>
@@ -89,12 +108,14 @@
   <option value="notImportant">Not Important</option>
 </select>
 
-<label>9. Would you prefer to have your own delivery app to manage orders while Udupi eSamudaay manages the deliveries on the backend?</label>
-<div class="radio-group">
-  <label><input type="radio" name="preferLocalDelivery" value="yes" required /> Yes</label>
-  <label><input type="radio" name="preferLocalDelivery" value="no" /> No</label>
-  <label><input type="radio" name="preferLocalDelivery" value="maybe" /> Maybe</label>
-</div>
+<fieldset>
+  <legend>9. Would you prefer to have your own delivery app to manage orders while Udupi eSamudaay manages the deliveries on the backend?</legend>
+  <div class="radio-group">
+    <label><input type="radio" name="preferLocalDelivery" value="yes" required /> Yes</label>
+    <label><input type="radio" name="preferLocalDelivery" value="no" /> No</label>
+    <label><input type="radio" name="preferLocalDelivery" value="maybe" /> Maybe</label>
+  </div>
+</fieldset>
 
 <label>10. What features would you like in your own delivery app? (Select all that apply)</label>
 <div class="checkbox-group">
@@ -109,8 +130,8 @@
 <label>11. How much are you currently spending monthly on delivery services? (₹)</label>
 <input type="number" id="monthlyDeliveryCost" name="monthlyDeliveryCost" min="0" step="100" placeholder="Enter approximate amount" />
 
-<label>12. How satisfied are you with your current delivery solutions?</label>
-<select name="deliverySatisfaction" required>
+<label for="deliverySatisfaction">12. How satisfied are you with your current delivery solutions?</label>
+<select id="deliverySatisfaction" name="deliverySatisfaction" required>
   <option value="" disabled selected>Select satisfaction level</option>
   <option value="verySatisfied">Very Satisfied</option>
   <option value="satisfied">Satisfied</option>
@@ -119,17 +140,19 @@
   <option value="veryDissatisfied">Very Dissatisfied</option>
 </select>
 
-<label>13. Do you use any digital app(s) for order management or delivery?</label>
-<div class="radio-group">
-  <label><input type="radio" name="useApps" value="yes" required /> Yes</label>
-  <label><input type="radio" name="useApps" value="no" /> No</label>
-</div>
+<fieldset>
+  <legend>13. Do you use any digital app(s) for order management or delivery?</legend>
+  <div class="radio-group">
+    <label><input type="radio" name="useApps" value="yes" required /> Yes</label>
+    <label><input type="radio" name="useApps" value="no" /> No</label>
+  </div>
+</fieldset>
 
 <label>14. If yes, which apps do you currently use? (Please specify)</label>
 <input type="text" name="currentApps" placeholder="E.g., Swiggy, Dunzo, custom apps" />
 
-<label>15. How confident are you about adopting a new delivery management app provided by Udupi eSamudaay?</label>
-<select name="adoptionConfidence" required>
+<label for="adoptionConfidence">15. How confident are you about adopting a new delivery management app provided by Udupi eSamudaay?</label>
+<select id="adoptionConfidence" name="adoptionConfidence" required>
   <option value="" disabled selected>Select confidence level</option>
   <option value="veryConfident">Very Confident</option>
   <option value="confident">Confident</option>
@@ -152,12 +175,14 @@
 <label>18. How do you currently attract new customers?</label>
 <textarea name="customerAttraction" rows="3" placeholder="E.g., word of mouth, ads, online platforms"></textarea>
 
-<label>19. Would you be willing to participate in a pilot program for Aify-eSamudaay’s delivery management app?</label>
-<div class="radio-group">
-  <label><input type="radio" name="pilotParticipation" value="yes" required /> Yes</label>
-  <label><input type="radio" name="pilotParticipation" value="no" /> No</label>
-  <label><input type="radio" name="pilotParticipation" value="maybe" /> Maybe</label>
-</div>
+<fieldset>
+  <legend>19. Would you be willing to participate in a pilot program for Aify-eSamudaay’s delivery management app?</legend>
+  <div class="radio-group">
+    <label><input type="radio" name="pilotParticipation" value="yes" required /> Yes</label>
+    <label><input type="radio" name="pilotParticipation" value="no" /> No</label>
+    <label><input type="radio" name="pilotParticipation" value="maybe" /> Maybe</label>
+  </div>
+</fieldset>
 
 <label>20. Any other feedback or suggestions?</label>
 <textarea name="additionalFeedback" rows="4" placeholder="Your comments"></textarea>
@@ -165,6 +190,113 @@
 <button type="submit">Submit Survey</button>
 
 </form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded and parsed");
+    const surveyForm = document.getElementById('merchantSurvey');
+    const errorMessage = document.getElementById('error-message');
+
+    // Add asterisks to required fields
+    const requiredFields = surveyForm.querySelectorAll('[required]');
+    const processedRadioGroups = new Set();
+    requiredFields.forEach(field => {
+      let label;
+      if (field.type === 'radio') {
+        const groupName = field.name;
+        if (processedRadioGroups.has(groupName)) return;
+
+        let fieldset = field.closest('fieldset');
+        if (fieldset) {
+          label = fieldset.querySelector('legend');
+        }
+        processedRadioGroups.add(groupName);
+      } else {
+        label = document.querySelector(`label[for="\${field.id}"]`);
+      }
+
+      if (label && !label.querySelector('.required-asterisk')) {
+        const asterisk = document.createElement('span');
+        asterisk.textContent = ' *';
+        asterisk.style.color = 'red';
+        asterisk.className = 'required-asterisk';
+        label.appendChild(asterisk);
+      }
+    });
+
+    surveyForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      console.log("Form submitted, starting validation.");
+
+      // Clear previous errors
+      errorMessage.style.display = 'none';
+      errorMessage.textContent = '';
+      document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+      document.querySelectorAll('.error-label').forEach(el => el.classList.remove('error-label'));
+
+
+      let isValid = true;
+      let firstInvalidField = null;
+
+      const requiredFields = surveyForm.querySelectorAll('[required]');
+      console.log(`Found \${requiredFields.length} required fields.`);
+
+      const validatedRadioGroups = new Set();
+
+      requiredFields.forEach((field, index) => {
+        let fieldValid = true;
+        let fieldToFocus = field;
+        let labelToMark;
+
+        if (field.type === 'radio') {
+          const groupName = field.name;
+          if (validatedRadioGroups.has(groupName)) return;
+
+          const radioGroup = document.getElementsByName(groupName);
+          if (![...radioGroup].some(radio => radio.checked)) {
+            fieldValid = false;
+            let fieldset = field.closest('fieldset');
+            if (fieldset) {
+                labelToMark = fieldset.querySelector('legend');
+            }
+          }
+          validatedRadioGroups.add(groupName);
+        } else {
+          labelToMark = document.querySelector(`label[for="\${field.id}"]`);
+          if (!field.value.trim()) {
+            fieldValid = false;
+          }
+        }
+
+        if (!fieldValid) {
+          console.log(`Field \${index} (\${field.name}) is invalid.`);
+          if (isValid) {
+            firstInvalidField = fieldToFocus;
+          }
+          isValid = false;
+          field.classList.add('error');
+          if (labelToMark) {
+            labelToMark.classList.add('error-label');
+          }
+        }
+      });
+
+      console.log(`Validation complete. Is form valid? \${isValid}`);
+      if (!isValid) {
+        errorMessage.textContent = 'Please fill in all the required fields marked with an asterisk.';
+        errorMessage.style.display = 'block';
+        console.log("Displaying error message.");
+        if (firstInvalidField) {
+          firstInvalidField.focus();
+          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        console.log("Form is valid, submitting.");
+        surveyForm.submit();
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
