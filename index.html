@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shopify-eSamudaay Merchant Survey</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 700px; margin: auto; padding: 20px; background: #f9f9f9; }
+  h1 { text-align: center; }
+  form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
+  label { display: block; margin-top: 15px; font-weight: bold; }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
+  }
+  textarea { resize: vertical; }
+  .radio-group, .checkbox-group {
+    margin-top: 5px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .radio-group label, .checkbox-group label {
+    font-weight: normal;
+  }
+  button {
+    margin-top: 20px; background-color: #0073e6; color: white; border: none; padding: 10px 20px;
+    border-radius: 5px; cursor: pointer; font-size: 16px;
+  }
+  button:hover { background-color: #005bb5; }
+</style>
+</head>
+<body>
+
+<h1>Shopify-eSamudaay Merchant Survey</h1>
+<p>Please take a few minutes to complete this survey designed for merchants with turnover between ₹3 crore and ₹10 crore. Your feedback will help us understand the need for a delivery app supported by Udupi eSamudaay.</p>
+
+<form id="merchantSurvey" action="#" method="post">
+
+<label for="businessName">1. Business Name</label>
+<input type="text" id="businessName" name="businessName" required />
+
+<label for="contactPerson">2. Contact Person Name</label>
+<input type="text" id="contactPerson" name="contactPerson" required />
+
+<label for="turnover">3. Approximate Annual Turnover (in ₹ crore)</label>
+<select id="turnover" name="turnover" required>
+  <option value="" disabled selected>Select range</option>
+  <option value="3-5">₹3-5 crore</option>
+  <option value="5-7">₹5-7 crore</option>
+  <option value="7-10">₹7-10 crore</option>
+</select>
+
+<label for="businessType">4. Type of Business</label>
+<select id="businessType" name="businessType" required>
+  <option value="" disabled selected>Select business type</option>
+  <option value="grocery">Grocery / Kirana</option>
+  <option value="restaurant">Restaurant / Food Delivery</option>
+  <option value="apparel">Apparel / Fashion</option>
+  <option value="electronics">Electronics / Appliances</option>
+  <option value="pharmacy">Pharmacy / Health</option>
+  <option value="other">Other</option>
+</select>
+
+<label>5. Do you currently offer home delivery for your products?</label>
+<div class="radio-group">
+  <label><input type="radio" name="deliveryOffered" value="yes" required /> Yes</label>
+  <label><input type="radio" name="deliveryOffered" value="no" /> No</label>
+</div>
+
+<label>6. If yes, how do you currently manage deliveries?</label>
+<textarea id="deliveryManagement" name="deliveryManagement" rows="3" placeholder="E.g., in-house staff, third-party service, self-delivery"></textarea>
+
+<label>7. What are the biggest challenges you face with your current delivery process? (Select all that apply)</label>
+<div class="checkbox-group">
+  <label><input type="checkbox" name="deliveryChallenges" value="cost" /> High delivery costs</label>
+  <label><input type="checkbox" name="deliveryChallenges" value="timing" /> Inconsistent delivery times</label>
+  <label><input type="checkbox" name="deliveryChallenges" value="coverage" /> Limited delivery area coverage</label>
+  <label><input type="checkbox" name="deliveryChallenges" value="logistics" /> Logistics management difficulties</label>
+  <label><input type="checkbox" name="deliveryChallenges" value="customerService" /> Customer service issues</label>
+  <label><input type="checkbox" name="deliveryChallenges" value="other" /> Other</label>
+</div>
+
+<label>8. How important is having a reliable delivery service for your business growth?</label>
+<select name="deliveryImportance" required>
+  <option value="" disabled selected>Select importance level</option>
+  <option value="veryImportant">Very Important</option>
+  <option value="important">Important</option>
+  <option value="neutral">Neutral</option>
+  <option value="notImportant">Not Important</option>
+</select>
+
+<label>9. Would you prefer a delivery app supported by a trusted local provider like Udupi eSamudaay?</label>
+<div class="radio-group">
+  <label><input type="radio" name="preferLocalDelivery" value="yes" required /> Yes</label>
+  <label><input type="radio" name="preferLocalDelivery" value="no" /> No</label>
+  <label><input type="radio" name="preferLocalDelivery" value="maybe" /> Maybe</label>
+</div>
+
+<label>10. What features would you like in a delivery app? (Select all that apply)</label>
+<div class="checkbox-group">
+  <label><input type="checkbox" name="desiredFeatures" value="realTimeTracking" /> Real-time delivery tracking</label>
+  <label><input type="checkbox" name="desiredFeatures" value="easyPayments" /> Easy payment integration</label>
+  <label><input type="checkbox" name="desiredFeatures" value="customerSupport" /> Responsive customer support</label>
+  <label><input type="checkbox" name="desiredFeatures" value="wideCoverage" /> Wide delivery coverage in Udupi</label>
+  <label><input type="checkbox" name="desiredFeatures" value="lowCost" /> Affordable delivery charges</label>
+  <label><input type="checkbox" name="desiredFeatures" value="dataInsights" /> Data insights on deliveries and sales</label>
+</div>
+
+<label>11. How much are you currently spending monthly on delivery services? (₹)</label>
+<input type="number" id="monthlyDeliveryCost" name="monthlyDeliveryCost" min="0" step="100" placeholder="Enter approximate amount" />
+
+<label>12. How satisfied are you with your current delivery solutions?</label>
+<select name="deliverySatisfaction" required>
+  <option value="" disabled selected>Select satisfaction level</option>
+  <option value="verySatisfied">Very Satisfied</option>
+  <option value="satisfied">Satisfied</option>
+  <option value="neutral">Neutral</option>
+  <option value="dissatisfied">Dissatisfied</option>
+  <option value="veryDissatisfied">Very Dissatisfied</option>
+</select>
+
+<label>13. Do you use any digital app(s) for order management or delivery?</label>
+<div class="radio-group">
+  <label><input type="radio" name="useApps" value="yes" required /> Yes</label>
+  <label><input type="radio" name="useApps" value="no" /> No</label>
+</div>
+
+<label>14. If yes, which apps do you currently use? (Please specify)</label>
+<input type="text" name="currentApps" placeholder="E.g., Swiggy, Dunzo, custom apps" />
+
+<label>15. How confident are you about adopting a new delivery platform provided by a local community like Udupi eSamudaay?</label>
+<select name="adoptionConfidence" required>
+  <option value="" disabled selected>Select confidence level</option>
+  <option value="veryConfident">Very Confident</option>
+  <option value="confident">Confident</option>
+  <option value="neutral">Neutral</option>
+  <option value="notConfident">Not Confident</option>
+</select>
+
+<label>16. What would encourage you the most to switch to or try Shopify-eSamudaay’s delivery platform? (Select all that apply)</label>
+<div class="checkbox-group">
+  <label><input type="checkbox" name="switchEncouragement" value="lowerCost" /> Lower delivery costs</label>
+  <label><input type="checkbox" name="switchEncouragement" value="betterSupport" /> Better customer and merchant support</label>
+  <label><input type="checkbox" name="switchEncouragement" value="localFocus" /> Focus on local community and businesses</label>
+  <label><input type="checkbox" name="switchEncouragement" value="integration" /> Easy integration with existing systems</label>
+  <label><input type="checkbox" name="switchEncouragement" value="flexibility" /> Flexible service options</label>
+</div>
+
+<label>17. What are your key concerns about using such a delivery platform?</label>
+<textarea name="keyConcerns" rows="3" placeholder="E.g., reliability, costs, technology"></textarea>
+
+<label>18. How do you currently attract new customers?</label>
+<textarea name="customerAttraction" rows="3" placeholder="E.g., word of mouth, ads, online platforms"></textarea>
+
+<label>19. Would you be willing to participate in a pilot program for Shopify-eSamudaay’s delivery app?</label>
+<div class="radio-group">
+  <label><input type="radio" name="pilotParticipation" value="yes" required /> Yes</label>
+  <label><input type="radio" name="pilotParticipation" value="no" /> No</label>
+  <label><input type="radio" name="pilotParticipation" value="maybe" /> Maybe</label>
+</div>
+
+<label>20. Any other feedback or suggestions?</label>
+<textarea name="additionalFeedback" rows="4" placeholder="Your comments"></textarea>
+
+<button type="submit">Submit Survey</button>
+
+</form>
+
+</body>
+</html>
