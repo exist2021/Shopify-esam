@@ -75,7 +75,7 @@
 <input type="text" id="contactPerson" name="contactPerson" required />
 
 <label for="turnover">3. Approximate Annual Turnover (in ₹ crore)</label>
-<select id="turnover" name="turnover" required>
+<select id="turnover" name="turnover">
   <option value="" disabled selected>Select range</option>
   <option value="3-5">₹3-5 crore</option>
   <option value="5-7">₹5-7 crore</option>
@@ -105,7 +105,7 @@
 <textarea id="deliveryManagement" name="deliveryManagement" rows="3" placeholder="E.g., in-house staff, third-party service, self-delivery"></textarea>
 
 <label>7. What are the biggest challenges you face with your current delivery process? (Select all that apply)</label>
-<div class="checkbox-group">
+<div class="checkbox-group" data-required-group="true" data-group-name="deliveryChallenges">
   <label><input type="checkbox" name="deliveryChallenges" value="cost" /> High delivery costs</label>
   <label><input type="checkbox" name="deliveryChallenges" value="timing" /> Inconsistent delivery times</label>
   <label><input type="checkbox" name="deliveryChallenges" value="coverage" /> Limited delivery area coverage</label>
@@ -133,7 +133,7 @@
 </fieldset>
 
 <label>10. What features would you like in your own delivery app? (Select all that apply)</label>
-<div class="checkbox-group">
+<div class="checkbox-group" data-required-group="true" data-group-name="desiredFeatures">
   <label><input type="checkbox" name="desiredFeatures" value="realTimeTracking" /> Real-time order tracking</label>
   <label><input type="checkbox" name="desiredFeatures" value="easyPayments" /> Easy payment integration</label>
   <label><input type="checkbox" name="desiredFeatures" value="customerSupport" /> Responsive customer support</label>
@@ -146,7 +146,7 @@
 <input type="number" id="monthlyDeliveryCost" name="monthlyDeliveryCost" min="0" step="100" placeholder="Enter approximate amount" />
 
 <label for="deliverySatisfaction">12. How satisfied are you with your current delivery solutions?</label>
-<select id="deliverySatisfaction" name="deliverySatisfaction" required>
+<select id="deliverySatisfaction" name="deliverySatisfaction">
   <option value="" disabled selected>Select satisfaction level</option>
   <option value="verySatisfied">Very Satisfied</option>
   <option value="satisfied">Satisfied</option>
@@ -158,7 +158,7 @@
 <fieldset>
   <legend>13. Do you use any digital app(s) for order management or delivery?</legend>
   <div class="radio-group">
-    <label><input type="radio" name="useApps" value="yes" required /> Yes</label>
+    <label><input type="radio" name="useApps" value="yes" /> Yes</label>
     <label><input type="radio" name="useApps" value="no" /> No</label>
   </div>
 </fieldset>
@@ -167,7 +167,7 @@
 <input type="text" name="currentApps" placeholder="E.g., Swiggy, Dunzo, custom apps" />
 
 <label for="adoptionConfidence">15. How confident are you about adopting a new delivery management app provided by Udupi eSamudaay?</label>
-<select id="adoptionConfidence" name="adoptionConfidence" required>
+<select id="adoptionConfidence" name="adoptionConfidence">
   <option value="" disabled selected>Select confidence level</option>
   <option value="veryConfident">Very Confident</option>
   <option value="confident">Confident</option>
@@ -239,6 +239,18 @@
       }
     });
 
+    const requiredGroups = surveyForm.querySelectorAll('[data-required-group="true"]');
+    requiredGroups.forEach(group => {
+      const label = group.previousElementSibling;
+      if (label && label.tagName === 'LABEL' && !label.querySelector('.required-asterisk')) {
+        const asterisk = document.createElement('span');
+        asterisk.textContent = ' *';
+        asterisk.style.color = 'red';
+        asterisk.className = 'required-asterisk';
+        label.appendChild(asterisk);
+      }
+    });
+
     surveyForm.addEventListener('submit', function(event) {
       event.preventDefault();
       console.log("Form submitted, starting validation.");
@@ -292,6 +304,22 @@
           field.classList.add('error');
           if (labelToMark) {
             labelToMark.classList.add('error-label');
+          }
+        }
+      });
+
+      const requiredCheckboxGroups = surveyForm.querySelectorAll('[data-required-group="true"]');
+      requiredCheckboxGroups.forEach(group => {
+        const groupName = group.dataset.groupName;
+        const checkboxes = group.querySelectorAll('input[name="' + groupName + '"]');
+        if (![...checkboxes].some(checkbox => checkbox.checked)) {
+          isValid = false;
+          let labelToMark = group.previousElementSibling;
+          if (labelToMark) {
+            labelToMark.classList.add('error-label');
+          }
+          if (!firstInvalidField) {
+            firstInvalidField = checkboxes[0];
           }
         }
       });
