@@ -227,7 +227,7 @@
         }
         processedRadioGroups.add(groupName);
       } else {
-        label = document.querySelector(`label[for="\${field.id}"]`);
+        label = document.querySelector('label[for="' + field.id + '"]');
       }
 
       if (label && !label.querySelector('.required-asterisk')) {
@@ -289,7 +289,7 @@
           }
           validatedRadioGroups.add(groupName);
         } else {
-          labelToMark = document.querySelector(`label[for="\${field.id}"]`);
+          labelToMark = document.querySelector('label[for="' + field.id + '"]');
           if (!field.value.trim()) {
             fieldValid = false;
           }
